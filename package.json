@@ -2,6 +2,7 @@
   "name": "taptap-developer-workbench",
   "version": "0.7.6",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "main": "desktop/main.mjs",
   "description": "TapTap 游戏上架与运营自动化 Windows 桌面应用",
@@ -30,7 +31,8 @@
       "public/**/*",
       "lib/**/*",
       "build/icon.png",
-      "package.json"
+      "package.json",
+      "LICENSE"
     ],
     "win": {
       "target": "portable",
