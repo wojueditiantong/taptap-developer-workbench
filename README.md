@@ -4,6 +4,10 @@
 
 > 本项目不是 TapTap 官方产品。自动化执行层使用官方 `@taptap/cli`，社区编辑器使用 TapTap 官方页面；账号权限、接口能力和审核结果以官方当次返回为准。
 
+![TapTap 开发者工作台经营分析界面](docs/assets/workbench-preview.png)
+
+> 图中为脱敏示例游戏与运营数据，仅用于界面展示。
+
 ## 下载与运行
 
 在 [Releases](../../releases) 下载 `TapTap-Workbench-0.7.6-Windows-x64.exe`。这是 Windows x64 单文件便携版，无需安装 Node.js、启动网页服务或打开命令行。
