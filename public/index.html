@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'">
+  <title>TapTap 开发者工作台 · 上架与运营</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./community.css">
+  <link rel="stylesheet" href="./insights.css">
+  <link rel="stylesheet" href="./game-detail.css">
+  <link rel="stylesheet" href="./official-editor.css">
+  <link rel="stylesheet" href="./community-drafts.css">
+</head>
+<body>
+  <header id="desktopTitlebar" class="desktop-titlebar"><span><b>T</b> TapTap 开发者工作台</span><small>上架与运营自动化</small><div><button id="windowMinimize" aria-label="最小化">−</button><button id="windowMaximize" aria-label="最大化">□</button><button id="windowClose" aria-label="关闭">×</button></div></header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <button class="brand" data-go="home" aria-label="返回开始页"><span class="brand-seal">T</span><span><strong>TapTap 工作台</strong><small>上架 · 运营 · 玩家反馈</small></span></button>
+      <nav aria-label="主导航">
+        <button class="nav-item active" data-go="home"><span class="nav-icon">⌂</span>开始</button>
+        <button class="nav-item" data-go="game-detail"><span class="nav-icon">▣</span>游戏详情</button>
+        <button class="nav-item" data-go="release"><span class="nav-icon">↑</span>上架发布</button>
+        <button class="nav-item" data-go="community"><span class="nav-icon">✎</span>社区发帖</button>
+        <button class="nav-item" data-go="operations"><span class="nav-icon">◫</span>经营分析</button>
+        <button class="nav-item" data-go="runs"><span class="nav-icon">✓</span>执行记录</button>
+      </nav>
+      <div class="sidebar-bottom"><button class="help-link" data-go="guide">? 使用指南</button><div class="connection-mini"><span id="miniStatusDot" class="status-dot"></span><span id="miniStatusText">正在检查连接</span></div></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow" id="viewEyebrow">WORKSPACE</p><h1 id="viewTitle">开始</h1></div>
+        <div class="topbar-actions"><button id="currentGameButton" class="game-switch" data-go="game-detail" aria-label="查看当前游戏详情"><span class="game-avatar">游</span><span><small>当前游戏</small><strong id="currentGameName">尚未选择游戏</strong></span><span class="switch-text">查看详情</span></button><button id="accountButton" class="account-button" type="button" aria-haspopup="dialog"><span class="account-icon">●</span><span>账号</span></button></div>
+      </header>
+
+      <section id="home" class="view active">
+        <div class="welcome"><p class="eyebrow">PUBLISH WITH CONFIDENCE</p><h2>今天想做什么？</h2><p>选择一个任务，剩下的按步骤来。</p></div>
+        <div class="task-grid">
+          <button class="task-card create-task" data-task="create"><span class="task-icon">＋</span><span class="task-copy"><strong>创建新游戏</strong><span>从游戏草稿开始，逐步确认</span><em>开始创建 →</em></span></button>
+          <button class="task-card detail-task" data-task="game-detail"><span class="task-icon">▣</span><span class="task-copy"><strong>查看游戏详情</strong><span>资料、截图、平台状态与版本</span><em>查看当前游戏 →</em></span></button>
+          <button class="task-card release-task" data-task="release"><span class="task-icon">↑</span><span class="task-copy"><strong>发布新版本</strong><span>体检、包体、资料与提审</span><em>进入上架向导 →</em></span></button>
+          <button class="task-card community-task" data-task="community"><span class="task-icon">✎</span><span class="task-copy"><strong>写一篇社区帖子</strong><span>上传素材、保存草稿、预览并发布</span><em>进入社区发帖 →</em></span></button>
+          <button class="task-card ops-task" data-task="operations"><span class="task-icon">◫</span><span class="task-copy"><strong>查看经营分析</strong><span>周期报告、趋势与玩家评价</span><em>打开经营分析 →</em></span></button>
+        </div>
+
+        <article id="setupPanel" class="panel setup-panel">
+          <div class="section-heading"><div><p class="eyebrow">GET STARTED</p><h3>先连接你的工作空间</h3></div><span id="setupBadge" class="pill neutral">1 / 3</span></div>
+          <div class="setup-steps" aria-label="连接进度"><span id="setupStep1" class="active">1 连接账号</span><i></i><span id="setupStep2">2 选择开发者</span><i></i><span id="setupStep3">3 选择游戏</span></div>
+          <div id="setupContent" class="setup-content"><div class="loading-block"><span class="spinner"></span><p>正在检查 TapTap 连接…</p></div></div>
+        </article>
+        <details class="manual-context"><summary>已有开发者和游戏 ID？手动输入</summary><form id="contextForm" class="context-form"><label>开发者 ID<input id="devId" inputmode="numeric" placeholder="纯数字 ID"></label><label>游戏 ID<input id="appId" inputmode="numeric" placeholder="纯数字 ID"></label><button class="button secondary" type="submit">使用这个游戏</button></form></details>
+      </section>
+
+      <section id="create" class="view">
+        <div class="page-intro"><div><p class="eyebrow">NEW GAME WIZARD</p><h2>创建新游戏</h2><p>一次确认一项。最后只创建游戏草稿，不会自动提审或上线。</p></div><span class="pill warning">确认后创建草稿</span></div>
+        <div class="create-layout"><aside class="create-side"><span class="create-mark">＋</span><h3>一个新游戏，从清楚的信息开始</h3><p id="createDeveloperName">当前开发者</p><ol><li>厂商关系</li><li>游戏名称</li><li>游戏类型</li><li>包体方向</li><li>核对并创建</li></ol><p class="create-material-note">创建后通常还需准备游戏图标、简介、开发者的话、真实截图、宣传图和实机视频；具体规格以新游戏的官方返回为准。</p></aside>
+          <form id="createForm" class="panel create-form">
+            <div class="create-progress"><span id="createStepCount">第 1 步，共 5 步</span><span>游戏草稿</span></div>
+            <section class="create-step active" data-create-step="0"><p class="eyebrow">YOUR ROLE</p><h3>你与当前厂商是什么关系？</h3><p>这会影响厂商下的游戏归属，请按实际情况选择。</p><label>厂商关系<select id="createRole" required><option value="">请选择</option><option value="developer">开发者（developer）</option><option value="author">开发商（author）</option><option value="publisher">发行商（publisher）</option></select></label></section>
+            <section class="create-step" data-create-step="1"><p class="eyebrow">GAME TITLE</p><h3>游戏的正式名称是什么？</h3><p>填写最终名称，不要填测试包文件名或版本说明。</p><label>游戏名称<input id="createTitle" maxlength="100" autocomplete="off" placeholder="例如：你的游戏正式名称" required></label></section>
+            <section class="create-step" data-create-step="2"><p class="eyebrow">CATEGORY</p><h3>最接近哪一种玩法？</h3><p>按实际玩法选择，不根据游戏名称猜测。</p><label>游戏类型<select id="createCategory" required><option value="">请选择</option><option value="rpg">角色扮演</option><option value="casual">休闲</option><option value="action">动作</option><option value="strategy">策略</option><option value="simulation">模拟</option><option value="trivia">益智</option><option value="arcade">街机</option><option value="adventure">冒险</option><option value="card">卡牌</option><option value="sports">体育</option><option value="racing">竞速</option><option value="puzzle">解谜</option><option value="educational">教育</option><option value="music">音乐</option><option value="word">文字</option><option value="board">桌游</option></select></label></section>
+            <section class="create-step" data-create-step="3"><p class="eyebrow">PACKAGE</p><h3>准备提供哪种游戏包？</h3><p>四种方向都可以选择，请按实际包体确认。</p><label>包体方向<select id="createPackage" required><option value="">请选择</option><option value="apk">APK · 安卓手机安装包</option><option value="mini_app">Tap 小游戏 · 在 Tap 运行的包</option><option value="windows">PC · Windows 客户端包</option><option value="h5">H5 · 浏览器运行的网页包</option></select></label><p id="packageNote" class="field-hint"></p></section>
+            <section class="create-step" data-create-step="4"><p class="eyebrow">FINAL CHECK</p><h3>核对后生成创建预览</h3><p>预览通过后再单独确认创建。游戏资料、包体与分发状态仍需后续完善。</p><dl id="createSummary" class="create-summary"></dl></section>
+            <div id="createResult" class="inline-result"></div>
+            <div class="create-actions"><button id="createBack" class="button ghost" type="button">上一步</button><button id="createNext" class="button primary" type="button">继续</button><button id="createPreview" class="button primary" type="submit">生成创建预览</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="release" class="view">
+        <div class="page-intro"><div><p class="eyebrow">RELEASE WIZARD</p><h2>上架发布</h2><p>每次只处理一步。正式写入前，你总会先看到预览。</p></div><button class="button secondary" id="releaseCheckTop">重新体检</button></div>
+        <div class="wizard-layout">
+          <ol class="wizard-steps">
+            <li class="active" data-release-step="overview" role="button" tabindex="0" aria-current="step"><b>1</b><span><strong>发布体检</strong><small>缺口与下一步</small></span></li>
+            <li data-release-step="package" role="button" tabindex="0"><b>2</b><span><strong>包体</strong><small>上传、自测与绑定</small></span></li>
+            <li data-release-step="profile" role="button" tabindex="0"><b>3</b><span><strong>商店资料</strong><small>文字、图片与视频</small></span></li>
+            <li data-release-step="distribution" role="button" tabindex="0"><b>4</b><span><strong>平台分发</strong><small>确认玩家入口</small></span></li>
+            <li data-release-step="review" role="button" tabindex="0"><b>5</b><span><strong>审核上线</strong><small>复核、预检与提审</small></span></li>
+            <li data-release-step="versions" role="button" tabindex="0"><b>6</b><span><strong>版本管理</strong><small>状态与发布记录</small></span></li>
+          </ol>
+          <div class="wizard-content">
+            <article class="panel wizard-pane active" data-release-pane="overview"><div class="pane-heading"><div><span class="pane-kicker">第 1 步</span><h3>这次发布还缺什么？</h3></div><span class="pill neutral">只读</span></div><p class="pane-description">直接给出待补资料、包体、分发状态和版本事实。未知项不会被算作通过。</p><button id="releaseCheck" class="button primary">开始发布体检</button><div id="releaseCheckResult" class="check-results"><div class="empty-state compact"><span>✓</span><p>完成体检后，点击待办就能去对应页面处理。</p></div></div></article>
+            <article class="panel wizard-pane" data-release-pane="package"><div class="pane-heading"><div><span class="pane-kicker">第 2 步</span><h3>上传包体，再绑定到商店资料</h3></div><span class="pill warning">写入需确认</span></div><p class="pane-description">上传只进入包体库；包体可用后，还要在这里选择槽位绑定，两步都不会自动上线。</p><div class="upload-layout"><label>包体类型<select id="packageKind"><option value="upload.apk">Android APK</option><option value="upload.pc">Windows ZIP</option><option value="upload.h5">H5 ZIP</option><option value="upload.miniApp">Tap 小游戏 ZIP</option></select></label><div class="file-picker"><label>包体文件<input id="packageFile" placeholder="选择项目内已经构建好的包体"></label><button id="choosePackage" class="button secondary desktop-only" type="button">选择文件</button></div></div><div id="pcUploadFields" class="form-grid package-options hidden"><label>启动 EXE 的相对路径<input id="pcLaunchExe" placeholder="例如：game/Game.exe"></label><label>版本号<input id="pcVersion" placeholder="例如：1.0.0"></label></div><div id="h5UploadFields" class="package-options hidden"><label>屏幕方向<select id="h5Orientation"><option value="0">横屏</option><option value="1">竖屏</option></select></label><p class="field-hint">ZIP 根目录只能有一个游戏文件夹，index.html 在该文件夹第一层。</p></div><button id="uploadPackage" class="button primary">预览上传</button><div id="packageResult" class="inline-result"></div><div class="workflow-divider"><h3>绑定可用包体</h3><p>只展示官方返回的候选和槽位；快照会原样用于防止覆盖新变更。</p><button id="loadPackages" class="button secondary">读取可用包体</button><div id="packageBindings" class="binding-list"></div></div><div class="next-hint"><strong>上传不等于能发布</strong><span>仍需完成实际设备自测。能启动、能玩通、没有白屏和死路，再进入后续审核。</span></div></article>
+            <article class="panel wizard-pane" data-release-pane="profile"><div class="pane-heading"><div><span class="pane-kicker">第 3 步</span><h3>商店资料与素材</h3></div><span class="pill neutral">只修改草稿</span></div><p class="pane-description">按当前游戏的真实字段生成表单。文字直接编辑，图片或视频先上传，再单独确认回填。</p><div class="module-toolbar"><label>资料模块<select id="profileModule"><option value="basic-info">基础资料</option><option value="assets-upload">图片与视频</option><option value="profile-promotion">首页推荐</option><option value="windows-exclusive">Windows 素材与配置</option><option value="package">包体配置</option><option value="developer-info">开发者信息</option><option value="other-settings">其他设置</option></select></label><button id="loadProfileModule" class="button secondary">读取并编辑</button></div><div id="profileWorkspace" class="profile-workspace"><div class="empty-state compact"><p>选择模块后，这里会显示当前内容、必填状态和素材规格。</p></div></div></article>
+            <article class="panel wizard-pane" data-release-pane="distribution"><div class="pane-heading"><div><span class="pane-kicker">第 4 步</span><h3>玩家能从哪里下载或游玩？</h3></div><span class="pill warning">发布≠开放入口</span></div><p class="pane-description">版本上线不会自动把“敬请期待”改成开放下载。这里只使用当前游戏实际可见的平台和选项。</p><button id="loadDistribution" class="button secondary">读取平台与分发状态</button><div id="distributionWorkspace" class="profile-workspace"></div></article>
+            <article class="panel wizard-pane" data-release-pane="review"><div class="pane-heading"><div><span class="pane-kicker">第 5 步</span><h3>先复核，再决定是否提审</h3></div><span class="pill danger">高风险</span></div><div class="release-schedule"><label>审核通过后的上线方式<select id="releaseMode"><option value="immediate">立即上线</option><option value="scheduled_exact">精确定时上线</option></select></label><label id="releaseTimeField" class="hidden">定时上线时间<input id="releaseTime" type="datetime-local"></label></div><div class="review-flow"><div><b>1</b><span><strong>生成复核快照</strong><small>查看本次资料、包体与风险</small></span><button id="reviewSnapshot" class="button secondary">生成快照</button></div><div><b>2</b><span><strong>执行提审预检</strong><small>读取阻塞项与内容预审结果</small></span><button id="reviewPrecheck" class="button secondary">开始预检</button></div><div><b>3</b><span><strong>正式提交审核</strong><small>使用相同上线方式，单独确认一次</small></span><button id="reviewSubmit" class="button danger-outline">准备提审</button></div></div><div id="reviewResult" class="inline-result"></div><p class="legal-hint">提审不等于通过，审核通过也不等于玩家入口已经开放。</p></article>
+            <article class="panel wizard-pane" data-release-pane="versions"><div class="pane-heading"><div><span class="pane-kicker">第 6 步</span><h3>版本状态与发布记录</h3></div><button id="loadVersions" class="button secondary">刷新状态</button></div><p class="pane-description">撤审、撤定时和立即发布都有独立的状态门禁，不会在普通资料编辑中触发。</p><div id="versionsResult" class="version-list"></div><div id="versionActions" class="version-actions"></div><div id="versionResult" class="inline-result"></div></article>
+          </div>
+        </div>
+        <details class="expert-block global-expert"><summary>高级模式：官方动作与原始返回</summary><div class="expert-grid"><div><label>选择动作<select id="actionSelect"></select></label><p id="actionHint" class="field-hint"></p><div id="schemaFields" class="form-grid hidden"><label>Service<input id="schemaService"></label><label>Method<input id="schemaMethod"></label></div><label id="dataField">业务参数 JSON<textarea id="actionData" rows="8">{}</textarea></label><label id="fileField" class="hidden">文件路径<input id="actionFile"><button id="chooseActionFile" class="button secondary desktop-only" type="button">选择项目文件</button></label><button id="runAction" class="button secondary">运行动作</button></div><div><div class="result-toolbar"><strong>实际返回</strong><button id="copyResult" class="text-button">复制 JSON</button></div><div id="actionResult" class="empty-state compact"><p>原始返回默认只在这里显示。</p></div></div></div></details>
+      </section>
+
+      <section id="operations" class="view">
+        <div class="page-intro"><div><p class="eyebrow">LIVE OPERATIONS</p><h2>经营分析</h2><p>先看玩家和数据，再决定下一步做什么。</p></div></div>
+        <div class="tabs" role="tablist"><button class="active" data-ops-tab="insights">经营分析</button><button data-ops-tab="reviews">玩家声音</button></div>
+        <div class="ops-pane active" data-ops-pane="insights"><article class="panel"><div class="section-heading"><div><h3>经营分析</h3><p class="subheading">同口径周期对比、趋势来源、玩家问题与下一步建议</p></div><div class="date-presets"><button class="active" data-days="7">近 7 天</button><button data-days="30">近 30 天</button><button data-days="custom">自定义</button></div></div><div id="customDates" class="date-fields hidden"><label>开始日期<input id="reportStart" type="date"></label><label>结束日期<input id="reportEnd" type="date"></label></div><button id="operationsReport" class="button primary">生成经营分析</button><div id="reportResult" class="report-result"><div class="empty-state"><span>◫</span><h4>让数据告诉你先看哪里</h4><p>选择时间范围，生成包含前周期对比、渠道趋势、玩家问题和行动建议的分析。</p></div></div></article></div>
+        <div class="ops-pane" data-ops-pane="reviews"><article class="panel"><div class="section-heading"><div><h3>玩家评价</h3><p class="subheading">先处理反复出现的问题，不自动回复玩家</p></div><div class="filter-row"><select id="reviewFilter"><option value="negative">差评（1–2 星）</option><option value="all">全部评价</option><option value="unreplied">尚未互动</option></select><button id="loadReviews" class="button secondary">读取评价</button></div></div><div id="reviewsList" class="reviews-list"><div class="empty-state"><span>☰</span><h4>听听玩家怎么说</h4><p>读取后按评分、正文和官方回复状态整理。</p></div></div></article></div>
+      </section>
+
+      <section id="game-detail" class="view" aria-label="游戏详情">
+        <div class="page-intro game-detail-intro"><div><p class="eyebrow">GAME DETAILS</p><h2 id="gameDetailTitle">当前游戏详情</h2><p id="gameDetailSubtitle">资料、素材与版本，集中在这里查看。</p></div><div class="game-detail-actions"><span id="gameDetailStatus" class="pill neutral hidden"></span><button id="refreshGameDetail" class="button secondary" type="button">刷新详情</button></div></div>
+        <p id="gameDetailSourceNote" class="game-detail-note">只读汇总，不会修改游戏资料或发布状态。</p>
+        <div id="gameDetailContent" class="game-detail-content"><div class="empty-state compact"><p>进入游戏详情后，读取当前游戏的真实资料、素材和版本。</p></div></div>
+      </section>
+
+      <section id="community" class="view" aria-label="社区发帖">
+        <div class="community-shell">
+            <div class="page-intro community-page-intro"><div><p class="eyebrow">COMMUNITY PUBLISHING</p><h2>社区发帖</h2><p>直接使用官方编辑器和草稿箱，在应用内完成社区运营。</p></div><div class="community-view-tabs" role="tablist" aria-label="社区内容功能"><button class="active" data-community-view="compose" role="tab" aria-selected="true">官方编辑器</button><button data-community-view="drafts" role="tab" aria-selected="false">草稿箱</button><button data-community-view="manage" role="tab" aria-selected="false">已发内容</button></div></div>
+            <section id="communityCompose" aria-label="TapTap 官方帖子编辑器">
+              <article class="panel official-editor-card">
+                <div class="official-editor-toolbar"><div><h3>TapTap 官方帖子编辑器</h3><p>官方素材上传、论坛选择、草稿保存与发布都在下面的页面中完成。</p></div><div class="official-editor-actions"><button id="reloadOfficialEditor" class="button secondary" type="button">刷新页面</button><button id="openOfficialDrafts" class="button primary" type="button">打开草稿箱</button></div></div>
+                <div id="officialEditorHost" class="official-editor-host" aria-label="应用内 TapTap 官方编辑器区域"><div id="officialEditorPlaceholder" class="official-editor-placeholder"><span class="spinner"></span><p>正在加载 TapTap 官方编辑器…</p></div></div>
+                <div class="official-editor-footnote"><span id="officialEditorStatus" role="status">官方页面尚未加载</span><span>保存草稿、继续编辑和删除均使用官方功能；工具不会自动替你发布。</span></div>
+              </article>
+              <details id="communityAssistant" class="community-assistant"><summary>使用工作台辅助编辑（帖子模板、素材整理、本地预览与二次确认发布）</summary>
+              <ol class="post-progress" aria-label="发帖进度"><li class="active" id="postStepEdit"><b>1</b><span>编辑内容<small>正文与素材</small></span></li><li id="postStepDraft"><b>2</b><span>保存草稿<small>确认后写入</small></span></li><li id="postStepReview"><b>3</b><span>审阅预览<small>核对展示效果</small></span></li><li id="postStepPublish"><b>4</b><span>确认发布<small>独立不可逆操作</small></span></li></ol>
+              <div class="community-workspace">
+                <article class="panel community-editor">
+                  <div class="section-heading"><div><h3>写一篇社区帖子</h3><p class="subheading">发布位置与身份来自当前游戏的真实论坛配置</p></div><div class="post-heading-actions"><button id="openPostTemplates" class="button secondary" type="button">✦ 使用帖子模板</button><span id="postDraftBadge" class="pill neutral">尚未保存</span></div></div>
+                  <div class="post-destination"><label>目标社区<input id="postForum" readonly value="尚未选择游戏"></label><label>子版块<select id="postGroup" disabled><option value="">先读取发帖选项</option></select></label><label>发布身份<select id="postIdentity" disabled><option value="">先读取发帖选项</option></select></label></div>
+                  <button id="reloadPostOptions" class="text-button post-options-reload" type="button">刷新版块与身份</button>
+                  <label class="post-title-field">标题 <span id="titleCount" class="char-count">0 / 100</span><input id="postTitle" maxlength="100" autocomplete="off" placeholder="一句话说清这次更新"></label>
+                  <div class="post-body-heading"><label for="postBody">正文</label><div class="post-format-tools" aria-label="正文排版"><button type="button" data-post-format="heading">＋ 小标题</button><button type="button" data-post-format="list">＋ 要点</button><button type="button" data-post-format="quote">＋ 引用</button></div></div>
+                  <textarea id="postBody" rows="13" placeholder="这次更新了什么？&#10;&#10;玩家能体验到什么？&#10;&#10;已知问题与下一步……"></textarea>
+                  <p class="field-hint">空行分段；使用上方按钮插入小标题、要点和引用。右侧会同步显示排版。</p>
+                  <div class="post-media-heading"><div><h4>正文图片与视频</h4><p>先选择文件并预览上传，再把返回的素材插入正文。</p></div><span id="postMediaCount" class="pill neutral">0 项素材</span></div>
+                  <div class="post-media-picker"><label>本机素材文件<input id="postMediaFile" readonly placeholder="从电脑任意文件夹选择图片或视频"></label><button id="choosePostImage" class="button secondary desktop-only" type="button">选择图片</button><button id="choosePostVideo" class="button secondary desktop-only" type="button">选择视频</button></div>
+                  <p class="field-hint">选择后仅复制到应用上传暂存区，不会立即上传；预览并输入确认语后才会上传到 TapTap。</p>
+                  <div class="post-media-actions"><button id="uploadPostMedia" class="button secondary" type="button">预览素材上传</button><span>上传成功 ≠ 已保存草稿，更不等于已发布</span></div>
+                  <div id="postMediaResult" class="inline-result"></div>
+                  <div id="postAssets" class="post-assets"><div class="post-assets-empty">还没有正文素材。图片会按实际上传返回的宽高插入；视频可正常引用转码中的素材。</div></div>
+                  <div class="post-draft-actions"><button id="createPostDraft" class="button primary" type="button">预览保存草稿</button><span id="postSaveHint">请先填写标题、正文，并读取发帖选项</span></div>
+                  <div id="postResult" class="inline-result"></div>
+                  <div id="postPublishPanel" class="post-publish-panel hidden"><div><h4>准备发布这份草稿？</h4><p>内容修改后，需要重新保存并再次审阅。发布后不能直接在这里撤回。</p></div><label class="post-review-check"><input id="postReviewed" type="checkbox">我已核对标题、正文、素材、子版块和发布身份</label><button id="publishPost" class="button danger-outline" type="button" disabled>预览发布此草稿</button></div>
+                </article>
+                <aside class="panel community-preview"><div class="preview-sticky"><div class="section-heading"><div><p class="eyebrow">POST PREVIEW</p><h3>帖子预览</h3></div><span class="pill neutral">本地排版</span></div><div class="post-preview"><div class="post-author"><span id="previewAvatar" class="game-avatar">官</span><span><strong id="previewAuthor">游戏官方</strong><small id="previewDestination">请先选择游戏与版块</small></span></div><h4 id="previewTitle">你的帖子标题会显示在这里</h4><div id="previewBody" class="post-preview-body"><p>开始输入正文，这里会同步显示排版效果。</p></div><div id="previewAssets" class="post-preview-assets"></div></div><div class="writing-tip"><strong>发布前的小检查</strong><p>区分“计划、已实现、已验证、已上线”，不承诺未确定的功能、奖励或曝光。最终展示请以保存后的官方预览为准。</p></div></div></aside>
+              </div>
+              </details>
+            </section>
+            <section id="communityDrafts" class="hidden" aria-label="账号草稿箱">
+              <div class="drafts-toolbar">
+                <div><h3>我的草稿</h3><p id="draftsSummary" role="status">正在准备读取当前账号的官方草稿</p></div>
+                <button id="refreshDrafts" class="button secondary" type="button">刷新草稿</button>
+              </div>
+              <div class="drafts-layout">
+                <aside class="panel drafts-browser" aria-label="草稿列表">
+                  <label class="draft-search-label" for="draftSearch">搜索草稿</label>
+                  <div class="draft-search"><span aria-hidden="true">⌕</span><input id="draftSearch" type="search" autocomplete="off" placeholder="搜索标题、摘要或论坛"></div>
+                  <div id="draftsList" class="drafts-list" role="listbox" aria-label="官方草稿"></div>
+                </aside>
+                <article class="panel draft-detail-panel">
+                  <div id="draftEmpty" class="draft-detail-empty"><span aria-hidden="true">✎</span><h3>选择一份草稿</h3><p>在左侧查看标题和摘要，再进入官方编辑器继续创作。</p></div>
+                  <div id="draftDetail" class="draft-detail hidden">
+                    <p class="eyebrow">DRAFT OVERVIEW</p>
+                    <h3 id="draftDetailTitle"></h3>
+                    <div class="draft-detail-meta"><span id="draftDetailForum"></span><span id="draftDetailTime"></span></div>
+                    <div class="draft-summary-block"><h4>正文摘要</h4><p id="draftDetailSummary"></p></div>
+                    <p class="draft-detail-note">这里显示官方列表摘要。完整正文、素材和发布设置请进入官方编辑器核对。</p>
+                    <button id="editOfficialDraft" class="button primary" type="button">继续编辑</button>
+                  </div>
+                </article>
+              </div>
+            </section>
+            <section id="communityManage" class="hidden" aria-label="已发帖子"><article class="panel"><div class="section-heading"><div><h3>已发内容</h3><p class="subheading">查看公开可见的帖子、互动与正文；刚发布且审核中的内容可能不会立刻出现</p></div><button id="loadMoments" class="button secondary" type="button">刷新帖子</button></div><div class="moment-filters"><label>排序<select id="momentOrder"><option value="published">最新发布</option><option value="commented">最近回复</option></select></label><label>内容类型<select id="momentIntent"><option value="">全部帖子</option><option value="1">问答求助</option><option value="2">反馈建议</option><option value="1,2">求助与反馈</option></select></label></div><div id="momentsList" class="moments-list"><div class="empty-state compact"><span>◫</span><p>进入这里后自动读取当前游戏的社区帖子。</p></div></div><div class="moments-pagination"><button id="momentsPrev" class="button ghost" type="button" disabled>上一页</button><span id="momentsPage">第 1 页</span><button id="momentsNext" class="button ghost" type="button" disabled>下一页</button></div></article></section>
+        </div>
+      </section>
+
+      <section id="runs" class="view"><div class="page-intro"><div><p class="eyebrow">AUDIT TRAIL</p><h2>执行记录</h2><p>每一次读取、预览和真实写入，都可以回查。</p></div><button id="refreshRuns" class="button secondary">刷新记录</button></div><article class="panel"><div id="runsList" class="runs-list"></div></article></section>
+
+      <section id="guide" class="view"><div class="page-intro"><div><p class="eyebrow">PLAYBOOK</p><h2>使用指南</h2><p>把发布当成一条证据链，而不是一连串按钮。</p></div></div><div class="guide-grid"><article class="panel"><span>01</span><h3>第一次使用</h3><p>先在开始页连接官方 CLI，选择开发者和游戏。授权只需一次，凭据不进入工作台。</p></article><article class="panel"><span>02</span><h3>发布新版本</h3><p>按体检、包体、自测、资料、预检、提审的顺序走。上传成功不等于绑定，提审不等于上线。</p></article><article class="panel"><span>03</span><h3>每周运营</h3><p>固定生成数据报告，阅读差评正文，把重复问题排进版本，再用开发日志说明真实改动。</p></article></div><article class="panel guide-safety"><h3>所有写入都有两道门</h3><p>第一次点击只生成预览；核对后输入完整确认语才执行一次。结果不明时先查记录，不盲目重试。</p></article></section>
+    </main>
+  </div>
+
+  <dialog id="confirmDialog"><form id="confirmForm"><p class="eyebrow">FINAL CONFIRMATION</p><h3>最后核对一次</h3><div id="confirmSummary" class="confirm-summary"></div><div class="confirm-warning"><strong>接下来会真实写入</strong><p>只执行一次。结果不明时请查执行记录，不要重复点击。</p></div><label>输入确认语<input id="confirmationText" autocomplete="off" required></label><div class="dialog-actions"><button id="cancelConfirm" class="button ghost" type="button">再想想</button><button class="button danger" type="submit">确认并执行一次</button></div></form></dialog>
+  <dialog id="accountDialog" aria-labelledby="accountTitle"><div class="account-dialog-head"><span class="account-avatar">T</span><div><p class="eyebrow">TAPTAP ACCOUNT</p><h3 id="accountTitle">账号与连接</h3></div></div><div class="account-connection"><span id="accountStatusDot" class="status-dot"></span><strong id="accountStatus">正在检查连接</strong></div><p class="account-description">退出会清除本机凭据、应用授权会话与当前游戏选择，不影响线上内容。选择“退出并切换账号”后会直接打开全新的官方授权窗口。</p><div id="desktopWorkspace" class="workspace-row desktop-only"><span id="workspacePath">游戏项目文件夹</span><button id="chooseWorkspace" class="text-button" type="button">更改</button></div><div class="dialog-actions"><button id="switchAccountButton" class="button primary" type="button">退出并切换账号</button><button id="closeAccount" class="button ghost" type="button">完成</button><button id="logoutButton" class="button danger-outline" type="button">退出连接</button></div></dialog>
+  <dialog id="momentDialog" aria-label="帖子正文详情"><div id="momentDetail"></div><div class="dialog-actions"><button id="closeMoment" class="button ghost" type="button">关闭</button></div></dialog>
+  <dialog id="postTemplateDialog" aria-labelledby="postTemplateTitle">
+    <div class="template-dialog-head"><div><p class="eyebrow">CONTENT TEMPLATES</p><h3 id="postTemplateTitle">这次要发布什么？</h3><p>选择场景，填写真实信息，再继续编辑。套用模板不会保存或发布帖子。</p></div><button id="closePostTemplates" class="template-close" type="button" aria-label="关闭模板">×</button></div>
+    <div id="postTemplateChoices" class="post-template-choices"></div>
+    <section id="postTemplateEditor" class="post-template-editor hidden">
+      <button id="postTemplateBack" class="text-button" type="button">← 重新选择模板</button>
+      <h3 id="postTemplateName"></h3><p id="postTemplateDescription" class="subheading"></p>
+      <div class="post-template-body"><div id="postTemplateFields" class="post-template-fields"></div><div class="post-template-preview"><strong>生成内容预览</strong><h4 id="postTemplatePreviewTitle"></h4><div id="postTemplatePreviewBody"></div></div></div>
+      <label id="postTemplateReplaceRow" class="post-template-replace hidden"><input id="postTemplateReplace" type="checkbox">我知道套用模板会替换编辑器中尚未发布的文字（已添加的图片和视频会保留）</label>
+      <div class="dialog-actions"><button id="cancelPostTemplate" class="button ghost" type="button">取消</button><button id="applyPostTemplate" class="button primary" type="button">填入编辑器，继续修改</button></div>
+    </section>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="busyOverlay" class="busy-overlay hidden"><span class="spinner"></span><p id="busyText">正在处理…</p></div>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

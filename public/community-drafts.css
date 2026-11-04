@@ -1,0 +1,363 @@
+/* 原生草稿工作区：官方数据，应用内搜索、选择与继续编辑。 */
+#communityDrafts {
+  min-width: 0;
+}
+
+.drafts-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.drafts-toolbar h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.drafts-toolbar p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.drafts-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  min-height: 570px;
+}
+
+.drafts-browser {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 18px 12px 12px;
+  overflow: hidden;
+}
+
+.draft-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.draft-search {
+  position: relative;
+  flex: none;
+  margin: 0 6px 14px;
+}
+
+.draft-search > span {
+  position: absolute;
+  left: 13px;
+  top: 9px;
+  z-index: 1;
+  color: #7d93a5;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.draft-search input {
+  height: 42px;
+  margin: 0;
+  padding: 9px 13px 9px 39px;
+  border-color: transparent;
+  border-radius: 11px;
+  background: #f1f6f9;
+  font-size: 12px;
+}
+
+.drafts-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 260px;
+  max-height: calc(100vh - 310px);
+  padding: 0 5px 4px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c8dce5 transparent;
+}
+
+.draft-card {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  min-height: 118px;
+  padding: 13px;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+}
+
+.draft-card:hover {
+  background: #f3f9fb;
+}
+
+.draft-card:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+}
+
+.draft-card.selected {
+  border-color: #a5dfe9;
+  background: #eaf9fc;
+  box-shadow: inset 3px 0 var(--green);
+}
+
+.draft-cover,
+.draft-cover-placeholder {
+  width: 62px;
+  height: 74px;
+  border-radius: 10px;
+  background: #e8f1f5;
+  object-fit: cover;
+}
+
+.draft-cover-placeholder {
+  display: grid;
+  place-items: center;
+  color: #78a2b3;
+  font-size: 21px;
+}
+
+.draft-card-copy {
+  min-width: 0;
+}
+
+.draft-card-title,
+.draft-card-summary,
+.draft-card-forum,
+.draft-card-time {
+  display: block;
+  overflow: hidden;
+}
+
+.draft-card-title {
+  display: -webkit-box;
+  color: #20354b;
+  font-size: 13px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.draft-card-summary {
+  margin-top: 5px;
+  color: #7a8ea0;
+  font-size: 10px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.draft-card-forum {
+  margin-top: 8px;
+  color: #4b7b8e;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.draft-card-time {
+  margin-top: 3px;
+  color: #9aa9b6;
+  font-size: 9px;
+}
+
+.draft-detail-panel {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  padding: 34px 38px;
+  overflow: hidden;
+}
+
+.draft-detail-panel::after {
+  content: "";
+  position: absolute;
+  right: -90px;
+  top: -100px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 184, 217, .08), transparent 70%);
+  pointer-events: none;
+}
+
+.draft-detail-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  flex-direction: column;
+  min-height: 360px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.draft-detail-empty > span {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 18px;
+  border-radius: 22px;
+  background: var(--green-soft);
+  color: var(--green-dark);
+  font-size: 29px;
+}
+
+.draft-detail-empty h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.draft-detail-empty p {
+  max-width: 330px;
+  margin: 11px 0 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.draft-detail {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px 4px 4px;
+}
+
+.draft-detail > h3 {
+  max-width: 760px;
+  margin: 16px 0 14px;
+  color: #1c3349;
+  font-size: clamp(22px, 2.3vw, 30px);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.draft-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  color: #718a9d;
+  font-size: 11px;
+}
+
+.draft-summary-block {
+  width: 100%;
+  margin-top: 36px;
+  padding: 24px;
+  border: 1px solid #e0edf2;
+  border-radius: 15px;
+  background: #f7fbfc;
+}
+
+.draft-summary-block h4 {
+  margin: 0 0 13px;
+  color: #57788c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.draft-summary-block p {
+  margin: 0;
+  color: #3f596e;
+  font-size: 14px;
+  line-height: 1.95;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.draft-summary-block p.placeholder {
+  color: #91a2af;
+}
+
+.draft-detail-note {
+  max-width: 560px;
+  margin: 17px 0 26px;
+  color: #8a9aa8;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+#editOfficialDraft {
+  min-width: 142px;
+  margin-top: auto;
+}
+
+.draft-list-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 230px;
+  padding: 24px 16px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.draft-list-message strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.draft-list-message p {
+  margin: 0;
+}
+
+.draft-list-message .button {
+  margin-top: 5px;
+}
+
+@media (max-width: 1100px) {
+  .drafts-layout {
+    grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+  }
+
+  .draft-detail-panel {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .drafts-toolbar {
+    align-items: flex-start;
+  }
+
+  .drafts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .drafts-list {
+    max-height: 360px;
+  }
+
+  .draft-detail-panel {
+    min-height: 400px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draft-card {
+    transition: none;
+  }
+}

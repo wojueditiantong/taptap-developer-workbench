@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>官方编辑器交互验收</title>
+<style>
+  body{margin:0;font:14px "Microsoft YaHei",sans-serif;color:#26384a;background:#fff}
+  header{display:flex;align-items:center;gap:12px;padding:20px;border-bottom:1px solid #e5edf2}
+  strong{margin-right:auto}button{padding:9px 18px;border:1px solid #dce7ed;border-radius:8px;background:#fff;color:#26738b}
+  main{padding:32px}input{width:100%;box-sizing:border-box;padding:13px;border:1px solid #dce7ed;border-radius:8px}
+  .editor-body{min-height:250px;margin-top:18px;padding:20px;border:1px solid #dce7ed;border-radius:8px;color:#9aabb7}
+  .draft-drawer{position:fixed;top:0;right:0;bottom:0;width:420px;padding:24px;background:#fff;box-shadow:-8px 0 35px #29445825;overflow:auto}
+  .draft-item{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:20px 0;border-bottom:1px solid #e5edf2;cursor:pointer}
+  .draft-item__title-content{font-weight:700}.draft-item__summary{margin-top:7px;color:#788b99;font-size:12px}
+  .draft-item__meta,.draft-item__time{margin-top:8px;color:#8c9ca8;font-size:11px}.draft-item__compact-media img{width:64px;height:80px;object-fit:cover}
+  .draft-item__compact-media--placeholder{width:64px;height:80px;background:#edf3f6}.draft-item__delete{padding:4px 8px;color:#b26b72}
+  .hidden{display:none}
+</style>
+<body data-draft-open="false">
+<header><strong>发帖子</strong><button class="moment-editor-header-actions__draft-entry" id="draftEntry">草稿箱</button><button>存草稿</button><button>发布</button></header>
+<main><input id="editorTitle" aria-label="帖子标题" placeholder="请输入帖子标题"><div class="editor-body">输入“/”指令添加游戏、图片、表情...</div><p>发布至论坛　添加论坛 (0/2)</p></main>
+<aside id="draftDrawer" class="draft-drawer right-drawer-scaffold moment-editor-draft-drawer hidden" aria-label="草稿箱">
+  <button id="closeDrafts" class="right-drawer-scaffold__close" aria-label="关闭草稿箱">关闭草稿箱</button>
+  <h2>草稿箱（3）</h2>
+  <div class="draft-item" role="button" data-title="示例草稿一">
+    <div class="draft-item__compact-media"><img src="https://www.taptap.cn/favicon.ico" alt=""></div>
+    <div><div class="draft-item__title-content">示例草稿一</div><div class="draft-item__summary">第一份草稿的正文摘要</div><div class="draft-item__meta">示例游戏 · 开发日志</div><div class="draft-item__time"><span class="tap-time">2026-11-01 08:00</span></div><button class="draft-item__delete" type="button">删除</button></div>
+  </div>
+  <div class="draft-item" role="button" data-title="示例草稿二">
+    <div class="draft-item__compact-media draft-item__compact-media--placeholder"></div>
+    <div><div class="draft-item__title-content">示例草稿二</div><div class="draft-item__summary draft-item__summary--placeholder">暂无正文</div><div class="draft-item__meta">示例游戏 · 综合讨论</div><div class="draft-item__time"><span class="tap-time">2026-10-31 18:30</span></div><button class="draft-item__delete" type="button">删除</button></div>
+  </div>
+  <div class="draft-item" role="button" data-title="示例草稿三">
+    <div class="draft-item__compact-media draft-item__compact-media--placeholder"></div>
+    <div><div class="draft-item__title-content">示例草稿三</div><div class="draft-item__summary">第三份草稿仍在整理</div><div class="draft-item__meta">示例游戏 · 官方公告</div><div class="draft-item__time"><span class="tap-time">2026-10-30 12:00</span></div><button class="draft-item__delete" type="button">删除</button></div>
+  </div>
+</aside>
+<script>
+  const drawer=document.querySelector('#draftDrawer');
+  function setOpen(open){drawer.classList.toggle('hidden',!open);document.body.dataset.draftOpen=String(open)}
+  document.querySelector('#draftEntry').addEventListener('click',()=>setOpen(true));
+  document.querySelector('#closeDrafts').addEventListener('click',()=>setOpen(false));
+  for(const item of document.querySelectorAll('.draft-item'))item.addEventListener('click',()=>{document.querySelector('#editorTitle').value=item.dataset.title;setOpen(false)});
+  for(const button of document.querySelectorAll('.draft-item__delete'))button.addEventListener('click',event=>{event.stopPropagation();document.body.dataset.deleteClicked='true'});
+</script>
+</body>
+</html>

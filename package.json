@@ -1,0 +1,58 @@
+{
+  "name": "taptap-developer-workbench",
+  "version": "0.7.6",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "description": "TapTap 游戏上架与运营自动化 Windows 桌面应用",
+  "author": "TapTap 开发者工作台",
+  "dependencies": {
+    "@taptap/cli": "2026.10.31"
+  },
+  "scripts": {
+    "dev": "node desktop/launch.mjs .",
+    "desktop": "node desktop/launch.mjs .",
+    "desktop:smoke": "node desktop/launch.mjs . --smoke-test",
+    "desktop:build": "node desktop/build.mjs",
+    "web": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "build": {
+    "appId": "cn.taptap.developer.workbench",
+    "productName": "TapTap 开发者工作台",
+    "electronDist": "node_modules/electron/dist",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/@taptap/cli/**/*"
+    ],
+    "files": [
+      "desktop/**/*",
+      "public/**/*",
+      "lib/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    },
+    "portable": {
+      "artifactName": "TapTap-Workbench-${version}-Windows-x64.exe"
+    },
+    "directories": {
+      "output": "release"
+    },
+    "electronDownload": {
+      "cache": ".cache/electron"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0",
+    "node": "^24.21.0"
+  }
+}

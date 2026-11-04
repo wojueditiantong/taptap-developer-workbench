@@ -1,0 +1,15 @@
+node_modules/
+release/
+output/
+.cache/
+tmp-test-*/
+NVIDIA Corporation/
+*.log
+*.tmp
+.env
+.env.*
+!.env.example
+desktop-settings.json
+state.json
+runs/
+reports/
